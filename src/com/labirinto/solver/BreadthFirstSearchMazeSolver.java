@@ -39,11 +39,6 @@ public class BreadthFirstSearchMazeSolver implements MazeSolver {
 
                 if(maze.isExibitionMode()) {
                     Main.exibeLabirinto(backtrackPath(coordinate), maze);
-                    try {
-                        Thread.sleep(200L);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }

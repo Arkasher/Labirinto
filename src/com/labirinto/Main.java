@@ -42,7 +42,7 @@ public class Main {
 
         Maze maze = new Maze();
         maze.map(lines);
-        maze.setExibitionMode(false);
+        maze.setExibitionMode(true);
 
         MazeSolver mazeSolver = new BreadthFirstSearchMazeSolver();
 
@@ -67,6 +67,11 @@ public class Main {
                 }
             }
             System.out.println();
+        }
+        try {
+            Thread.sleep(500L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

@@ -37,11 +37,6 @@ public class DepthFirstSearchMazeSolver implements MazeSolver {
 
         if(maze.isExibitionMode()) {
             Main.exibeLabirinto(path, maze);
-            try {
-                Thread.sleep(200L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         if (maze.isExit(rowColPath)) {
