@@ -4,6 +4,7 @@ import com.labirinto.models.Maze;
 import com.labirinto.models.Path;
 import com.labirinto.solver.BreadthFirstSearchMazeSolver;
 import com.labirinto.solver.DepthFirstSearchMazeSolver;
+import com.labirinto.solver.DijkstraMazeSolver;
 import com.labirinto.solver.MazeSolver;
 
 import java.util.*;
@@ -42,9 +43,9 @@ public class Main {
 
         Maze maze = new Maze();
         maze.map(lines);
-        maze.setExibitionMode(true);
+        maze.setExibitionMode(false);
 
-        MazeSolver mazeSolver = new BreadthFirstSearchMazeSolver();
+        MazeSolver mazeSolver = new DijkstraMazeSolver();
 
         exibeLabirinto(mazeSolver.solve(maze), maze);
     }

@@ -45,16 +45,14 @@ public class BreadthFirstSearchMazeSolver implements MazeSolver {
         return Collections.emptyList();
     }
 
-    private List<Path> backtrackPath(
-            Path cur) {
+    private List<Path> backtrackPath(Path current) {
         List<Path> path = new ArrayList<>();
-        Path iterator = cur;
+        Path parent = current;
 
-        while (iterator != null) {
-            path.add(iterator);
-            iterator = iterator.getParent();
+        while (parent != null) {
+            path.add(parent);
+            parent = parent.getParent();
         }
-
         return path;
     }
 }

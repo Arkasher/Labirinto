@@ -1,5 +1,7 @@
 package com.labirinto.models;
 
+import com.labirinto.solver.MazeSolver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class Maze {
     private int rows;
     private int columns;
     private boolean exibitionMode;
-    private final Path position = new Path(1, 1);
+    private final Path position = new DijkstraPath(1, 1);
 
     public void map(String[] lines) {
         rows = lines[0].length();
@@ -23,7 +25,7 @@ public class Maze {
             for (int y = 0; y < columns; y++) {
                 if (lines[y].charAt(x) == 'q') {
                     mazeArray[x][y] = 4;
-                    exit = new Path(x, y);
+                    exit = new DijkstraPath(x, y);
                 } else if (x == 0 || y == 0 || x == rows - 1 || y == columns - 1) {
                     mazeArray[x][y] = 2;
                 } else {
@@ -32,6 +34,21 @@ public class Maze {
             }
         }
     }
+
+    public boolean calculateAdjacentPaths(DijkstraPath path, int distance) {
+        if (!isWalkable(path)) {
+            return false;
+        }
+
+        for (int[] direction : MazeSolver.MOVE_DIRECTIONS) {
+            DijkstraPath coordinate = new DijkstraPath(path.getX() + direction[0], path.getY() + direction[1], path);
+            path.addDestination(coordinate, distance);
+            coordinate.setDistance(distance);
+            return calculateAdjacentPaths(coordinate, distance + 1);
+        }
+        return false;
+    }
+
 
     public boolean isExit(Path path) {
         return path.equals(exit);
@@ -46,8 +63,12 @@ public class Maze {
     }
 
     public boolean isWalkable(Path destination) {
-        int value = mazeArray[destination.getX()][destination.getY()];
-        return value == 1 || value == 4;
+        try {
+            int value = mazeArray[destination.getX()][destination.getY()];
+            return value == 1 || value == 4;
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return false;
+        }
     }
 
     public boolean isExibitionMode() {

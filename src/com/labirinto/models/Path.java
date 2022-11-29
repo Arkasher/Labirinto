@@ -1,6 +1,6 @@
 package com.labirinto.models;
 
-import java.util.Objects;
+import java.util.*;
 
 public class Path {
 
@@ -8,6 +8,7 @@ public class Path {
     private int x;
     private int y;
     private Path parent;
+
 
     public Path(int x, int y) {
         this.x = x;
