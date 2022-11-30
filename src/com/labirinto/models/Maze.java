@@ -1,7 +1,5 @@
 package com.labirinto.models;
 
-import com.labirinto.solver.MazeSolver;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class Maze {
     private int rows;
     private int columns;
     private boolean exibitionMode;
-    private final Path position = new DijkstraPath(1, 1);
+    private final Path position = new Path(1, 1);
 
     public void map(String[] lines) {
         rows = lines[0].length();
@@ -23,9 +21,9 @@ public class Maze {
 
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
-                if (lines[y].charAt(x) == 'q') {
+                if (lines[y].charAt(x) == 'q' || lines[y].charAt(x) == '\s') {
                     mazeArray[x][y] = 4;
-                    exit = new DijkstraPath(x, y);
+                    exit = new Path(x, y);
                 } else if (x == 0 || y == 0 || x == rows - 1 || y == columns - 1) {
                     mazeArray[x][y] = 2;
                 } else {
@@ -33,20 +31,6 @@ public class Maze {
                 }
             }
         }
-    }
-
-    public boolean calculateAdjacentPaths(DijkstraPath path, int distance) {
-        if (!isWalkable(path)) {
-            return false;
-        }
-
-        for (int[] direction : MazeSolver.MOVE_DIRECTIONS) {
-            DijkstraPath coordinate = new DijkstraPath(path.getX() + direction[0], path.getY() + direction[1], path);
-            path.addDestination(coordinate, distance);
-            coordinate.setDistance(distance);
-            return calculateAdjacentPaths(coordinate, distance + 1);
-        }
-        return false;
     }
 
 
